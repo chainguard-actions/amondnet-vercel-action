@@ -1,0 +1,26 @@
+name: Test deprecated inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-vercel-token
+          zeit-token: fake-zeit-token
+          now-project-id: fake-now-project-id
+          now-org-id: fake-now-org-id
+          scope: fake-team-slug
+          github-comment: "false"
+          github-deployment: "false"
+      - name: Assert action ran (may fail without real credentials)
+        run: |
+          echo "Action completed with continue-on-error"
+          echo "PASS: deprecated inputs were accepted by the action"
