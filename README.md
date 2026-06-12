@@ -10,6 +10,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 |---------|-----|-----------------|
 | v42.0.0 | [`v42.0.0`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.0.0) | [`1adf34d`](https://github.com/amondnet/vercel-action/commit/1adf34dd96086c9f778bcaf233cd31be4a9df0f2) |
 | v42.1.0 | [`v42.1.0`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.1.0) | [`c71810f`](https://github.com/amondnet/vercel-action/commit/c71810f8732de6b8656e41155e63b6303ca3e4bf) |
+| v42.2.0 | [`v42.2.0`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.2.0) | [`4b810e2`](https://github.com/amondnet/vercel-action/commit/4b810e26f7bb2a331c698af186f890cbf20d5f72) |
 | v42.2.1 | [`v42.2.1`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.2.1) | [`4b001a4`](https://github.com/amondnet/vercel-action/commit/4b001a441d80e00aeed3680a3719d1d8b95998c5) |
 | v42.3.0 | [`v42.3.0`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.3.0) | [`de09aea`](https://github.com/amondnet/vercel-action/commit/de09aeac2ace6599ec9b11ef87558759a496bac4) |
 
