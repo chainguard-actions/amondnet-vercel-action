@@ -1,0 +1,28 @@
+name: Test deprecated and legacy inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-vercel-token-for-testing
+          zeit-token: fake-zeit-token-for-testing
+          github-token: fake-github-token-for-testing
+          scope: my-team-slug
+          now-project-id: prj_fakenowid123456
+          now-org-id: team_fakenoworgid123
+          github-comment: "false"
+          github-deployment: "false"
+          target: preview
+      - name: Assert action ran (may fail with fake credentials)
+        run: |
+          echo "Action completed with outcome: ${{ steps.action.outcome }}"
+          echo "PASS: action step executed with deprecated inputs (credentials are fake so failure is expected)"

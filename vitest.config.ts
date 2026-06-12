@@ -1,0 +1,43 @@
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts'],
+      exclude: ['src/**/*.test.ts', 'src/__integration__/**'],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 70,
+        statements: 80,
+      },
+    },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/__tests__/**/*.test.ts'],
+          exclude: ['node_modules', 'dist', 'example'],
+          testTimeout: 10000,
+          hookTimeout: 10000,
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'integration',
+          include: ['src/__integration__/**/*.test.ts'],
+          exclude: ['node_modules', 'dist', 'example'],
+          globalSetup: ['src/__integration__/global-setup.ts'],
+          testTimeout: 30000,
+          hookTimeout: 30000,
+        },
+      },
+    ],
+  },
+})

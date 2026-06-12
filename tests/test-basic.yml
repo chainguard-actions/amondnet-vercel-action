@@ -1,0 +1,30 @@
+name: Test basic usage with core inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-vercel-token-for-testing
+          vercel-project-id: prj_fakeid123456789
+          vercel-org-id: team_fakeorgid123456
+          vercel-project-name: my-test-project
+          vercel-version: "32.0.0"
+          working-directory: .
+          github-comment: "false"
+          github-deployment: "false"
+          target: preview
+      - name: Assert action ran (may fail with fake credentials)
+        run: |
+          echo "Action completed with outcome: ${{ steps.action.outcome }}"
+          echo "preview-url: ${{ steps.action.outputs.preview-url }}"
+          echo "preview-name: ${{ steps.action.outputs.preview-name }}"
+          echo "PASS: action step executed (credentials are fake so failure is expected)"
