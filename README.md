@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v42.2.1 | [`v42.2.1`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.2.1) | [`4b001a4`](https://github.com/amondnet/vercel-action/commit/4b001a441d80e00aeed3680a3719d1d8b95998c5) |
 | v42.3.0 | [`v42.3.0`](https://github.com/chainguard-actions/amondnet-vercel-action/tree/v42.3.0) | [`de09aea`](https://github.com/amondnet/vercel-action/commit/de09aeac2ace6599ec9b11ef87558759a496bac4) |
 
 ## Privacy
