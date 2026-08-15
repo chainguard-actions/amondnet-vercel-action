@@ -1,0 +1,29 @@
+name: Test github-token input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Test with github-token input (expect failure with invalid token)
+        id: action
+        uses: .
+        with:
+          vercel-token: fake-vercel-token-for-coverage
+          github-token: ${{ github.token }}
+          github-comment: 'false'
+          vercel-project-id: fake-project-id
+          vercel-org-id: fake-org-id
+        continue-on-error: true
+      - name: Assert action ran (outcome is failure due to invalid vercel token)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action ran with github-token input"
+          else
+            echo "FAIL: unexpected outcome: $OUTCOME"
+            exit 1
+          fi

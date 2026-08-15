@@ -1,0 +1,28 @@
+name: deploy website preview
+on:
+  pull_request:
+    branches:
+      - master
+  pull_request_target:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./
+        id: vercel-action
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-comment: false
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_STATIC }}
+      - name: preview-url
+        env:
+          PREVIEW_URL: ${{ steps.vercel-action.outputs.preview-url }}
+        run: |
+          echo "$PREVIEW_URL"

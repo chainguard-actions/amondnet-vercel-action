@@ -58,15 +58,17 @@ inputs:
     required: false
     description: 'You can assign a domain to this deployment. Please note that this domain must have been configured in the project. You can use pull request number via `{{PR_NUMBER}}` and branch via `{{BRANCH}}`'
     default: ''
+
 outputs:
   preview-url:
     description: deployment preview URL
   preview-name:
     description: deployment preview name
 runs:
+  pre: chainguard-phonehome.js
   using: node24
   main: dist/index.js
-  pre: chainguard-phonehome.js
+
 branding:
   icon: triangle
   color: white
