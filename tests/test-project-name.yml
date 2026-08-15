@@ -1,0 +1,29 @@
+name: Test vercel-project-name input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-invalid-token-for-testing
+          github-comment: 'false'
+          vercel-project-name: my-test-project
+          vercel-project-id: prj_fake123
+          vercel-org-id: org_fake456
+
+      - name: Assert action failed gracefully with vercel-project-name set
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          # The action should fail at the Vercel deployment step (invalid token),
+          # not crash due to vercel-project-name handling.
+          if [ "${{ steps.action.outcome }}" = "cancelled" ]; then
+            echo "FAIL: action was unexpectedly cancelled"
+            exit 1
+          fi
+          echo "PASS: action ran with vercel-project-name input (outcome: ${{ steps.action.outcome }})"

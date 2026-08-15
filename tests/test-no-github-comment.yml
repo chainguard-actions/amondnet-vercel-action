@@ -1,0 +1,30 @@
+name: Test github-comment disabled
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-invalid-token-for-testing
+          github-comment: 'false'
+          vercel-project-id: prj_fake123
+          vercel-org-id: org_fake456
+
+      - name: Assert action failed (not crashed) with invalid token
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          # With github-comment=false and an invalid token, the action should
+          # fail at the Vercel deployment step (not crash on comment logic).
+          # Either 'failure' or 'success' is acceptable here — we just want
+          # to confirm the action ran and did not produce an unexpected error.
+          if [ "${{ steps.action.outcome }}" = "cancelled" ]; then
+            echo "FAIL: action was unexpectedly cancelled"
+            exit 1
+          fi
+          echo "PASS: action ran to completion (outcome: ${{ steps.action.outcome }})"

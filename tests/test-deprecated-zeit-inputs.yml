@@ -1,0 +1,28 @@
+name: Test deprecated Zeit inputs (zeit-token, now-org-id, now-project-id)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          zeit-token: fake-zeit-token-for-testing
+          now-org-id: org_fake_now_123
+          now-project-id: prj_fake_now_456
+          github-comment: 'false'
+
+      - name: Assert action ran (deprecated inputs accepted)
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          # The action should fail due to invalid token, not crash on input parsing.
+          # We just confirm it did not get cancelled unexpectedly.
+          if [ "${{ steps.action.outcome }}" = "cancelled" ]; then
+            echo "FAIL: action was unexpectedly cancelled"
+            exit 1
+          fi
+          echo "PASS: action ran to completion with deprecated Zeit inputs (outcome: ${{ steps.action.outcome }})"

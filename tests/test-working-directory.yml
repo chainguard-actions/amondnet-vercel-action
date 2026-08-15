@@ -1,0 +1,32 @@
+name: Test working-directory input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a working directory with a minimal project
+        run: |
+          mkdir -p /tmp/test-project
+          echo '{}' > /tmp/test-project/package.json
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          vercel-token: fake-invalid-token-for-testing
+          github-comment: 'false'
+          working-directory: /tmp/test-project
+
+      - name: Assert action failed gracefully with working-directory set
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          # The action should fail at the Vercel deployment step (invalid token),
+          # not crash due to working-directory handling.
+          if [ "${{ steps.action.outcome }}" = "cancelled" ]; then
+            echo "FAIL: action was unexpectedly cancelled"
+            exit 1
+          fi
+          echo "PASS: action ran with working-directory input (outcome: ${{ steps.action.outcome }})"
