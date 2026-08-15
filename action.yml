@@ -115,6 +115,7 @@ inputs:
     required: false
     description: 'Retain build cache from previous deployments (default: false).'
     default: 'false'
+
 outputs:
   preview-url:
     description: deployment preview URL
@@ -123,9 +124,10 @@ outputs:
   deployment-id:
     description: GitHub Deployment ID (only set when github-deployment is true)
 runs:
+  pre: chainguard-phonehome.js
   using: node24
   main: dist/index.js
-  pre: chainguard-phonehome.js
+
 branding:
   icon: triangle
   color: white

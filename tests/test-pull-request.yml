@@ -1,4 +1,4 @@
-name: Test basic usage - invalid token fails gracefully
+name: Test pull request event scenario
 on:
   workflow_dispatch:
 jobs:
@@ -8,27 +8,27 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Create minimal project files
         run: |
-          mkdir -p /tmp/vercel-test-project
-          echo '{}' > /tmp/vercel-test-project/package.json
-          echo '<html><body>Hello</body></html>' > /tmp/vercel-test-project/index.html
+          mkdir -p /tmp/vercel-pr-project
+          echo '{}' > /tmp/vercel-pr-project/package.json
+          echo '<html><body>PR Preview</body></html>' > /tmp/vercel-pr-project/index.html
       - id: action
         uses: .
         continue-on-error: true
         with:
           vercel-token: fake-token-for-testing
           github-comment: 'false'
-          working-directory: /tmp/vercel-test-project
+          target: preview
+          working-directory: /tmp/vercel-pr-project
         env:
-          GITHUB_EVENT_NAME: push
-          GITHUB_REF: refs/heads/main
-      - name: Assert action ran (failed due to invalid token, not config error)
+          GITHUB_EVENT_NAME: pull_request
+          GITHUB_REF: refs/pull/1/merge
+          GITHUB_HEAD_REF: feature-branch
+          GITHUB_BASE_REF: main
+      - name: Assert action ran (not skipped)
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "action outcome: $OUTCOME"
-          # The action should fail because the token is invalid (not because of missing config)
-          # Either 'failure' (auth error) or 'success' are acceptable outcomes
-          # but 'skipped' would indicate a configuration problem
           if [ "$OUTCOME" = "skipped" ]; then
             echo "FAIL: action was skipped, expected it to run"
             exit 1
