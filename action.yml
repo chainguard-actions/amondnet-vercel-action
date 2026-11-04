@@ -122,6 +122,7 @@ inputs:
     required: false
     description: 'Opt in to the experimental API-based deployment via @vercel/client. The CLI is the default and recommended path. The API client relies on an internal Vercel package without semver guarantees and may break across updates. Mutually exclusive with vercel-args (default: false).'
     default: 'false'
+
 outputs:
   preview-url:
     description: deployment preview URL
@@ -130,9 +131,9 @@ outputs:
   deployment-id:
     description: GitHub Deployment ID (only set when github-deployment is true)
 runs:
+  pre: chainguard-phonehome.js
   using: node24
   main: dist/index.js
-  pre: chainguard-phonehome.js
 branding:
   icon: triangle
   color: white
