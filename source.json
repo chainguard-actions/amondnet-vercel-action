@@ -4,8 +4,13 @@
   "version": "v42.2.1",
   "commit_sha": "4b001a441d80e00aeed3680a3719d1d8b95998c5",
   "url": "https://github.com/amondnet/vercel-action",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/amondnet/vercel-action/v42.2.1/sha256-fdea34fa878cd9b27899ae7d19431672a49afb0777d921477cfe3c521891b7b3.tar.gz",
+    "sha256": "fdea34fa878cd9b27899ae7d19431672a49afb0777d921477cfe3c521891b7b3",
+    "size_bytes": 1764962
+  }
 }
